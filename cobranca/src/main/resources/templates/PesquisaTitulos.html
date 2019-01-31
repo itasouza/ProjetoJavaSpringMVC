@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{LayoutPadrao}">
+    
+    <!-- https://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html -->
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<title>Pesquisa de títulos</title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="robots" content="all,follow">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.default.css">
+    <link rel="shortcut icon" href="/img/favicon.png">
+</head>
+<body>
+
+
+    <nav class="navbar navbar-inverse navbar-static-top">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+               <img src="/img/favicon.png" id="logo-site" width="30" height="30" alt="">
+            </a>
+            <a class="navbar-brand" id="titulo-site" href="#">Controle de Contas - Java com Spring MVC</a>
+          </div>
+        </div>
+    </nav>
+   
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+		   <div class="clearfix">
+			  <h1 class="panel-title aw-titulo-panel">Pesquisa de Títulos</h1>
+			   <a href="/titulos/novo" class="btn btn-primary aw-link-panel"><i class="glyphicon glyphicon-plus"></i> Novo Título</a>  
+			</div>
+		</div>
+
+		<div class="panel-body">
+		   
+		   <form method="GET" class="form-horizontal">
+		      <div class="form-group">
+		         <div class="col-sm-4">
+		            <div class="input-group">
+		                <input class="form-control" placeholder="Qual título você está procurando?"
+		                 autofocus="autofocus" name="descricao"></input>
+		                <span class="input-group-btn">
+		                  <button type="submit" class="btn btn-default">
+		                    <i class="glyphicon glyphicon-search"></i>
+		                  </button>
+		                </span>
+		            </div>
+		         </div>
+		      </div>
+		   </form>
+		   
+		 <div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
+		     <span th:text="${mensagem}">Título excluido com sucesso!!!</span>
+		  </div>
+		
+			<table class="table table-hover table-bordered table-striped table-responsive">
+				<thead>
+					<tr>
+						<th class="text-center col-md-1">#</th>
+						<th>Descrição</th>
+						<th class="text-center col-md-2">Data de Vencimento</th>
+						<th class="text-right col-md-2">Valor</th>
+						<th class="text-center col-md-2">Status</th>
+						<th class="col-md-1"></th>
+					</tr>
+				</thead>
+				<tbody>
+				    <tr th:each="titulo:${titulos}">
+				       <td class="text-center" th:text="${titulo.codigo}">1</td>
+				       <td th:text="${titulo.descricao}"></td>
+				       <td class="text-center" th:text="${{titulo.dataVencimento}}"></td>
+				       <td class="text-right"  th:text="|R$ ${{titulo.valor}}|"></td>
+				       <td class="text-center" th:attr="data-role=${titulo.codigo}" >
+				          <span class="label" th:text="${titulo.status.descricao}"
+				                              th:classappend="${titulo.pendente ? 'label-danger' :'label-success' }"></span>
+
+				       </td>
+				       <td class="text-center">
+				          <a class="btn btn-link btn-xs" th:href="@{/titulos/{codigo}(codigo=${titulo.codigo})}" title="Editar"  rel="tooltip" data-placement="top">
+				             <span class="glyphicon glyphicon-pencil"></span>
+				          </a>
+				          <a class="btn btn-link btn-xs" data-toggle="modal" data-target="#confirmacaoExclusaoModal"
+				            th:attr="data-codigo=${titulo.codigo}, data-descricao=${titulo.descricao}" title="Excluir"  rel="tooltip" data-placement="top">
+				             <span class="glyphicon glyphicon-remove"></span>
+				          </a>
+				          <a class="btn btn-link btn-xs js-atualizar-status" th:if="${titulo.pendente}"
+				             title="Receber"  rel="tooltip" data-placement="top"
+				             th:attr="data-codigo=${titulo.codigo}"
+				             th:href="@{/titulos/{codigo}/receber(codigo=${titulo.codigo})}">
+				             <span class="glyphicon glyphicon-check"></span>
+				          </a>
+				       </td>
+				    </tr> 
+					<tr>
+						<th colspan="6" th:if="${#lists.isEmpty(titulos)}">Nenhum título foi encontrado</th>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="confirmacaoExclusaoModal" tabindex="-1" data-keyboard="false" data-backdrop="static">
+		<div class="modal-dialog">
+			<form th:attr="data-url-base='/titulos'" method="POST">
+				<input type="hidden" name="_method" value="DELETE"/>
+				
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Você tem certeza?</h4>
+					</div>
+					
+					<div class="modal-body">
+						<span>Tem certeza que deseja apagar o título?</span>
+					</div>
+					
+					<div class="modal-footer">
+						<button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
+						<button type="submit" class="btn btn-primary">Excluir</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+    <script type="text/javascript" src="/js/jquery-1.12.4.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/cobranca.js"></script>
+</body>
+</html>
+
