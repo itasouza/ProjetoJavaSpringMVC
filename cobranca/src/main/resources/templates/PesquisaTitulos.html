@@ -12,9 +12,9 @@
     <meta name="description" content=""/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="robots" content="all,follow">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/style.default.css">
-    <link rel="shortcut icon" href="/img/favicon.png">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.default.css}">
+    <link rel="shortcut icon" th:href="@{/img/favicon.png}">
 </head>
 <body>
 
@@ -23,7 +23,7 @@
         <div class="container-fluid">
           <div class="navbar-header">
             <a class="navbar-brand" href="#">
-               <img src="/img/favicon.png" id="logo-site" width="30" height="30" alt="">
+              <img th:src="@{/img/favicon.png}" id="logo-site" width="30" height="30" alt="">
             </a>
             <a class="navbar-brand" id="titulo-site" href="#">Controle de Contas - Java com Spring MVC</a>
           </div>
@@ -35,18 +35,18 @@
 		<div class="panel-heading">
 		   <div class="clearfix">
 			  <h1 class="panel-title aw-titulo-panel">Pesquisa de Títulos</h1>
-			   <a href="/titulos/novo" class="btn btn-primary aw-link-panel"><i class="glyphicon glyphicon-plus"></i> Novo Título</a>  
+			   <a th:href="@{/titulos/novo}" class="btn btn-primary aw-link-panel"><i class="glyphicon glyphicon-plus"></i> Novo Título</a>  
 			</div>
 		</div>
 
 		<div class="panel-body">
 		   
-		   <form method="GET" class="form-horizontal">
+		   <form method="GET" class="form-horizontal" th:action="@{/titulos}" th:object="${filtro}">
 		      <div class="form-group">
 		         <div class="col-sm-4">
 		            <div class="input-group">
 		                <input class="form-control" placeholder="Qual título você está procurando?"
-		                 autofocus="autofocus" name="descricao"></input>
+		                 autofocus="autofocus" name="descricao" th:field="*{descricao}"></input>
 		                <span class="input-group-btn">
 		                  <button type="submit" class="btn btn-default">
 		                    <i class="glyphicon glyphicon-search"></i>
@@ -109,7 +109,7 @@
 	
 	<div class="modal fade" id="confirmacaoExclusaoModal" tabindex="-1" data-keyboard="false" data-backdrop="static">
 		<div class="modal-dialog">
-			<form th:attr="data-url-base='/titulos'" method="POST">
+			<form th:attr="data-url-base=@{/titulos}" method="POST">
 				<input type="hidden" name="_method" value="DELETE"/>
 				
 				<div class="modal-content">
@@ -130,9 +130,9 @@
 		</div>
 	</div>
 
-    <script type="text/javascript" src="/js/jquery-1.12.4.js"></script>
-    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/js/cobranca.js"></script>
+    <script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/cobranca.js}"></script>
 </body>
 </html>
 

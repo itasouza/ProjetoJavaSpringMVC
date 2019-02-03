@@ -11,10 +11,10 @@
     <meta name="description" content=""/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="robots" content="all,follow">
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/style.default.css">
-    <link rel="shortcut icon" href="/img/favicon.png">
-    <link rel="stylesheet" href="/css/bootstrap-datepicker.standalone.min.css">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.default.css}">
+    <link rel="shortcut icon" th:href="@{/img/favicon.png}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-datepicker.standalone.min.css}">
 </head>
 <body>
 
@@ -23,7 +23,7 @@
         <div class="container-fluid">
           <div class="navbar-header">
             <a class="navbar-brand" href="#">
-               <img src="/img/favicon.png" id="logo-site" width="30" height="30" alt="">
+               <img th:src="@{/img/favicon.png}" id="logo-site" width="30" height="30" alt="">
             </a>
             <a class="navbar-brand" id="titulo-site" href="#">Controle de Contas - Java com Spring MVC</a>
           </div>
@@ -31,7 +31,7 @@
     </nav>
     
 	
-      <form class="form-horizontal" method="post" action="/titulos" th:object="${titulo}">
+      <form class="form-horizontal" method="post" th:action="@{/titulos}" th:object="${titulo}">
 		    
         <div class="alert alert-success" th:if="${!#strings.isEmpty(mensagem)}">
 		    <span th:text="${mensagem}">Título salvo com sucesso!!!</span>
@@ -48,7 +48,7 @@
 		<div class="panel-heading">
 		   <div class="clearfix">
 			  <h1 class="panel-title aw-titulo-panel">Adicionar Novo Título</h1>
-			  <a href="/titulos" class="btn btn-primary aw-link-panel"><i class="glyphicon glyphicon-repeat"></i> Voltar para pesquisa</a>  
+			  <a th:href="@{/titulos}" class="btn btn-primary aw-link-panel"><i class="glyphicon glyphicon-repeat"></i> Voltar para pesquisa</a>  
 			</div>
 		</div>
 		
@@ -112,11 +112,11 @@
     </form>
    
 
-    <script type="text/javascript" src="/js/jquery-1.12.4.js"></script>
-    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/js/bootstrap-datepicker.min.js"></script>
-    <script type="text/javascript" src="/js/bootstrap-datepicker.pt-BR.min.js"></script>
-    <script type="text/javascript" src="/js/jquery.maskMoney.min.js"></script>
-    <script type="text/javascript" src="/js/cobranca-valor.js"></script>
+    <script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap-datepicker.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap-datepicker.pt-BR.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.maskMoney.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/cobranca-valor.js}"></script>
 </body>
 </html>

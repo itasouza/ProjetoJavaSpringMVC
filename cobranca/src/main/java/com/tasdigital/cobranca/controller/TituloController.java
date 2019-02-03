@@ -19,7 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tasdigital.cobranca.model.StatusTitulo;
 import com.tasdigital.cobranca.model.Titulo;
-import com.tasdigital.cobranca.repository.TitulosRepository;
+import com.tasdigital.cobranca.repository.filter.TituloFilter;
 import com.tasdigital.cobranca.service.CadastroTituloService;
 
 
@@ -31,8 +31,6 @@ public class TituloController {
 	
 	private static final String CADASTRO_VIEW = "CadastroTitulo";	 
 	
-	@Autowired
-	private TitulosRepository titulosRepository;
 	
 	@Autowired
 	private CadastroTituloService cadastroTituloService;
@@ -64,13 +62,15 @@ public class TituloController {
 	}
 	
 	@RequestMapping
-	public ModelAndView pesquisar(String descricao) {
-		List<Titulo> todosTitulos =  titulosRepository.findAll();
+	public ModelAndView pesquisar(@ModelAttribute("filtro") TituloFilter filtro) {
+		
+		List<Titulo> todosTitulos =  cadastroTituloService.filtrar(filtro);
 		
 		ModelAndView mv = new ModelAndView("PesquisaTitulos");
 		mv.addObject("titulos",todosTitulos);
 		return mv;
 	}
+	
 	
 	@RequestMapping("{codigo}")
 	public ModelAndView edicao(@PathVariable("codigo") Titulo titulo) {
